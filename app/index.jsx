@@ -1,28 +1,34 @@
 import { registerRootComponent } from 'expo';
-import { Text, View, ScrollView, TextInput } from 'react-native';
-import { NativeWindStyleSheet } from "nativewind";
-import  Banner  from '../components/Banner';
+import React from 'react';
+import { Text, View, ScrollView } from 'react-native';
+import { NativeWindStyleSheet } from 'nativewind';
+import Banner from '../components/Banner';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { QueryClient, QueryClientProvider, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import CreateRegion from '../components/CreateRegion';
+import Quest from '../components/Quest'
 
 NativeWindStyleSheet.setOutput({
-  default: "web",
+  default: 'web',
 });
+
 const queryClient = new QueryClient();
 
+
+
 export default function App() {
-    
-    return (
-     <QueryClientProvider client={queryClient}>
+  return (
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaView >
         <ScrollView>
-           <View className="bg-green-200">
-            <Banner/>
-            <Text>Test</Text>
-           </View>
-        </ScrollView >
-      </QueryClientProvider>
-      
-    );
+          <View className="bg-green-200">
+            <Banner />
+            <CreateRegion />
+            <Quest />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </QueryClientProvider>
+  );
 }
 registerRootComponent(App);
