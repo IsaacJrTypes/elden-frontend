@@ -1,6 +1,6 @@
 {
   "name": "elden-frontend",
-  "main": "app/index.jsx",
+  "main": "App/index.jsx",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
