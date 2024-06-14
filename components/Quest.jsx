@@ -30,6 +30,7 @@ export default function Quest() {
   if (isError) {
     return <Text>Error fetching data</Text>;
   }
+  //if(data) {console.log(JSON.stringify(data,null,2))}
 
   return (
     <View>
@@ -37,3 +38,5 @@ export default function Quest() {
     </View>
   );
 }
+
+
