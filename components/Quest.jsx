@@ -1,27 +1,10 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { Text, View } from 'react-native';
-import URL from '../envConfig'
+import {useRegions} from '../hooks/useRegions'
 
 export default function Quest() {
   
-  const getAllRegions = async () => {
-    try {
-      const response = await fetch(`${URL}regions`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return await response.json();
-    } catch (err) {
-      console.log('get all regions err:', err);
-      throw err; 
-    }
-  };
-
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['regions'],
-    queryFn: getAllRegions,
-  });
+ const { data, isLoading, isError } = useRegions()
 
   if (isLoading) {
     return <Text>Loading...</Text>;
@@ -30,7 +13,7 @@ export default function Quest() {
   if (isError) {
     return <Text>Error fetching data</Text>;
   }
-  //if(data) {console.log(JSON.stringify(data,null,2))}
+  if(data) {console.log(JSON.stringify(data,null,2))}
 
   return (
     <View>
