@@ -23,6 +23,22 @@ export default function Quest() {
         mutate(regionID)
     }
 
+    const handleToggleTask = (regionID, taskID) => {
+    setQuests((prevQuests) =>
+      prevQuests.map((region) =>
+        region.regionID === regionID
+          ? {
+              ...region,
+              tasks: region.tasks.map((task) =>
+                task._id === taskID
+                  ? { ...task, complete: !task.complete }
+                  : task
+              ),
+            }
+          : region
+        ));
+    };
+
     return (
         <View>
             <Text className="text-lg text-center">Quests</Text>
@@ -31,7 +47,7 @@ export default function Quest() {
                     return (
                     <View key={entry._id}>
                         <Pressable onPress={() => handleDelete(entry.regionID)}>
-                            <Text>Delete</Text>
+                            <Text className="text-center">Delete</Text>
                         </Pressable>
                         <Text>regionID:{entry.regionID}</Text>
                         <Text>Region Name{entry.name}</Text>
@@ -39,9 +55,14 @@ export default function Quest() {
                             return (
                             <View key={item._id}>
                                 <Text>{item.description}</Text>
-                                <Checkbox value={item.complete}/>
+                                <Checkbox value={item.complete}
+                                onValueChange={() => handleToggleTask(entry.regionID, item._id)}
+                                />
                             </View>)
                         })}
+                        <Pressable>
+                            <Text className="text-center my-2">Save</Text>
+                        </Pressable>
                     </View>)
                 })
                 : 
