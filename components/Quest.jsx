@@ -2,11 +2,13 @@ import React,{useState,useEffect} from 'react';
 import { Pressable, Text, View } from 'react-native';
 import {useRegions} from '../hooks/useRegions'
 import {useDeleteRegion} from '../hooks/useDeleteRegion'
+import {useUpdateRegion} from '../hooks/useUpdateRegion'
 import Checkbox from 'expo-checkbox';
 
 export default function Quest() {
     const { data, isLoading, isError } = useRegions()
-    const { mutate } = useDeleteRegion()
+    const { mutate:deleteRegion } = useDeleteRegion()
+    const { mutate:updateRegion } = useUpdateRegion()
 
     const [quests,setQuests] = useState([])
     useEffect(() => {
@@ -20,7 +22,7 @@ export default function Quest() {
 
     const handleDelete = (regionID) => {
         console.log("Clicked delete")
-        mutate(regionID)
+        deleteRegion(regionID)
     }
 
     const handleToggleTask = (regionID, taskID) => {
@@ -38,6 +40,12 @@ export default function Quest() {
           : region
         ));
     };
+
+    const handleSave = (regionID) => {
+        const foundRegion = quests.find((region) => region.regionID === regionID)
+        console.log('foundRegion',JSON.stringify(foundRegion.tasks))
+        updateRegion({ regionID, tasks: foundRegion.tasks })
+    }
 
     return (
         <View>
@@ -61,7 +69,7 @@ export default function Quest() {
                             </View>)
                         })}
                         <Pressable>
-                            <Text className="text-center my-2">Save</Text>
+                            <Text className="text-center my-2" onPress={() => handleSave(entry.regionID)}>Save</Text>
                         </Pressable>
                     </View>)
                 })
